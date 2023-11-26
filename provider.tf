@@ -12,3 +12,9 @@ terraform {
 provider "aws" {
   region  = "eu-west-1"
 }
+
+provider "kubernetes" {
+  config_path = "~/.kube/config"  # Replace with the path to your kubeconfig file
+  # load_config_file = true
+  # version = "~> 2.4"
+}

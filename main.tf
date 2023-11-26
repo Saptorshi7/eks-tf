@@ -12,6 +12,12 @@ module "iam" {
     source = "./modules/iam"
 }
 
+module "k8s" {
+    source = "./modules/k8s"
+
+    depends_on = [ module.eks ]
+}
+
 output "endpoint" {
   value = module.eks.endpoint
 }
