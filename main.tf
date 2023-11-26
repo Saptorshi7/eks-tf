@@ -3,6 +3,7 @@ module "eks" {
 
     eks_role = module.iam.eks_role
     node_role = module.iam.node_role
+    subnets = var.subnets
     
     depends_on = [ module.iam ]
 }
