@@ -37,4 +37,31 @@ resource "aws_eks_node_group" "example" {
   #   aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
   #   aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
   # ]
+
 }
+
+# resource "null_resource" "example" {
+#   provisioner "local-exec" {
+#     command = "aws eks --region eu-west-1 update-kubeconfig --name example"
+#     # command = <<-EOT
+#     #   aws eks --region eu-west-1 update-kubeconfig --name example
+#     #   sleep 10
+#     # EOT
+#   }
+
+#   depends_on = [ aws_eks_node_group.example ]
+# }
+
+# resource "time_sleep" "wait_30_seconds" {
+#   depends_on = [null_resource.example]
+
+#   create_duration = "60s"
+# }
+
+
+# module "k8s" {
+#     source = "../k8s"
+
+#     # depends_on = [ module.eks ]
+# }
+

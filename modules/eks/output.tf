@@ -9,3 +9,7 @@ output "kubeconfig-certificate-authority-data" {
 output "eks_cluster_name" {
   value = aws_eks_cluster.example.name
 }
+
+# output "token" {
+#   value = aws_eks_cluster.example.certificate_authority[]
+# }
