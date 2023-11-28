@@ -1,6 +1,6 @@
-variable "eks_role" {} 
-variable "node_role" {} 
+variable "eks_role" {}
+variable "node_role" {}
 
 variable "subnets" {
-  type    = list(string)
+  type = list(string)
 }

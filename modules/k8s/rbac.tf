@@ -41,27 +41,16 @@ resource "kubernetes_role_binding" "k8s_test_rolebinding" {
   }
 
   role_ref {
-    kind     = "Role"
-    name     = "k8s-test-role"
+    kind      = "Role"
+    name      = "k8s-test-role"
     api_group = "rbac.authorization.k8s.io"
   }
 }
 
-# resource "kubernetes_config_map" "aws_auth" {
-#   metadata {
-#     name      = "aws-auth"
-#     namespace = "kube-system"
-#   }
+resource "null_resource" "example" {
+  # ...
 
-#   data = {
-#     mapRoles = <<-EOT
-#       - groups:
-#         - system:bootstrappers
-#         - system:nodes
-#         rolearn: arn:aws:iam::636361317523:role/eks-node-group-example
-#         username: system:node:{{EC2PrivateDNSName}}
-#       - rolearn: arn:aws:iam::636361317523:role/eks-namespace-role
-#         username: k8s-test-user
-#     EOT
-#   }
-# }
+  provisioner "local-exec" {
+    command = "eksctl create iamidentitymapping --cluster ${var.cluster_name} --arn ${var.ns_role} --username k8s-test-user"
+  }
+}

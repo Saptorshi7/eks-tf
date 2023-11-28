@@ -4,17 +4,12 @@ resource "aws_iam_role" "eks_namespace_role" {
     Version = "2012-10-17",
     Statement = [
       {
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:iam::636361317523:user/Administrator"
-            },
-            "Action": "sts:AssumeRole"
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : "${data.aws_caller_identity.current.arn}"
         },
+        "Action" : "sts:AssumeRole"
+      },
     ],
   })
 }
-
-# resource "aws_iam_role_policy_attachment" "eks_namespace_role_attachment" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-#   role       = aws_iam_role.eks_namespace_role.name
-# }

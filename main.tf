@@ -1,27 +1,23 @@
 module "eks" {
-    source = "./modules/eks"
+  source = "./modules/eks"
 
-    eks_role = module.iam.eks_role
-    node_role = module.iam.node_role
-    subnets = var.subnets
-    
-    depends_on = [ module.iam ]
+  eks_role  = module.iam.eks_role
+  node_role = module.iam.node_role
+  subnets   = var.subnets
+
+  depends_on = [module.iam]
 }
 
 module "iam" {
-    source = "./modules/iam"
+  source = "./modules/iam"
 }
 
 module "k8s" {
-    source = "./modules/k8s"
+  source = "./modules/k8s"
 
-    depends_on = [ module.eks ]
-}
+  ns_role      = module.iam.ns_role
+  eks_role     = module.iam.eks_role
+  cluster_name = module.eks.eks_cluster_name
 
-output "endpoint" {
-  value = module.eks.endpoint
-}
-
-output "kubeconfig-certificate-authority-data" {
-  value = module.eks.kubeconfig-certificate-authority-data
+  depends_on = [module.eks]
 }

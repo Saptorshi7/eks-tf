@@ -10,26 +10,11 @@ terraform {
 }
 
 provider "aws" {
-  region  = "eu-west-1"
+  region = var.region
 }
 
 provider "kubernetes" {
-
-  # config_path = "~/.kube/config"  # Replace with the path to your kubeconfig file
-  # load_config_file = true
-  # version = "~> 2.4"
-
-  # host                   = module.eks.endpoint
-  # cluster_ca_certificate = module.eks.kubeconfig-certificate-authority-data
-  # token                  = var.k8s_token
-
-  
-
-  host                   = module.eks.endpoint
-  cluster_ca_certificate = base64decode(module.eks.kubeconfig-certificate-authority-data)
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--cluster-name", module.eks.endpoint]
-    command     = "aws"
-  }
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  token                  = data.aws_eks_cluster_auth.cluster.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
 }

@@ -1,3 +1,7 @@
 variable "subnets" {
-  type    = list(string)
+  type = list(string)
+}
+
+variable "region" {
+  type = string
 }
